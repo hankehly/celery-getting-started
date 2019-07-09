@@ -4,7 +4,7 @@ from celery import Celery
 # broker is used to send and receive messages
 # backend is used to store results and the status of results.
 # Without it, you cannot retrieve the return value of the task
-app = Celery('tasks', broker='redis://', backend='redis://')
+app = Celery('tasks', broker='redis://redis', backend='redis://redis')
 
 
 @app.task
