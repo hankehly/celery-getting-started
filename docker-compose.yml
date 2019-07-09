@@ -4,3 +4,6 @@ services:
         image: redis
         ports:
             - '6379:6379'
+    celery:
+        build: celery
+        command: poetry run celery -A celery.tasks worker --loglevel=info
