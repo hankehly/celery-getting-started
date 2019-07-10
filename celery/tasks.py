@@ -12,6 +12,16 @@ app.config_from_object('celeryconfig')
 def add(x, y):
     return x + y
 
+
+@app.task
+def mul(x, y):
+    return x * y
+
+
+@app.task
+def xsum(numbers):
+    return sum(numbers)
+
 # docker exec -it celery-getting-started_celery_1 poetry run python
 #
 # >>> from tasks import add
