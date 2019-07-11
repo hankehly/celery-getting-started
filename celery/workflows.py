@@ -13,8 +13,8 @@ def group_example():
     """
     tasks = (add.s(i, i) for i in range(10))
     g = group(tasks)
-    result = g()
-    print(result.get())
+    result = g().get()
+    print(result)
 
 
 def chain_example():
@@ -27,10 +27,10 @@ def chain_example():
     # (4 + 4) * 2 = 16
     tasks = add.s(4, 4) | mul.s(2)
     c = chain(tasks)
-    result = c()
+    result = c().get()
     # >>> celery_1  | [2019-07-10 00:55:09,168: WARNING/ForkPoolWorker-3] x: 8
     # >>> celery_1  | [2019-07-10 00:55:09,169: WARNING/ForkPoolWorker-3] y: 2
-    print(result.get())
+    print(result)
 
 
 def chord_example():
@@ -44,5 +44,16 @@ def chord_example():
     # sum([0 + 5, 1 + 6, 2 + 7, 3 + 8, 4 + 9]) = 45
     g = group(add.s(i, i + 5) for i in range(5))
     ch = chord(g, xsum.s())
-    result = ch()
-    print(result.get())
+    result = ch().get()
+    print(result)
+
+
+def chunks_example():
+    """
+    chunks divides work into a given number of tasks
+    """
+    args = zip(range(100), range(100))
+    n_chunks = 10
+    chunks = add.chunks(args, n_chunks)
+    result = chunks().get()
+    print(result)
